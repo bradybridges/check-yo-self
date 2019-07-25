@@ -1,0 +1,36 @@
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+body {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-areas:
+  "header header header"
+  "aside main main"
+  "aside main main";
+}
+
+#header {
+  grid-area: header;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#h1--yo-span{
+  
+}
+
+#header--search-form {
+}
+
+#aside {
+  grid-area: aside;
+}
+
+#main {
+  grid-area: main;
+}
