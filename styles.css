@@ -1,3 +1,4 @@
+/*General Styles*/
 *,
 *:before,
 *:after {
@@ -6,31 +7,124 @@
 
 body {
   display: grid;
+  font-family: 'open sans';
+  font-weight: 400;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-areas:
   "header header header"
   "aside main main"
   "aside main main";
+  margin: 0px;
+}
+/*Header Styles*/
+#header {
+  align-items: center;
+  background-color: #1f1f3d;
+  display: flex;
+  grid-area: header;
+  justify-content: space-between;
 }
 
-#header {
-  grid-area: header;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+#header--title {
+  color: #fff;
+  font-size: 2.2em;
+  letter-spacing: .02em;
+  margin: 12px 12px;
 }
 
 #h1--yo-span{
-  
+  color: #ffc30c;
 }
 
 #header--search-form {
+  display: flex;
+  margin-right: 12px;
 }
 
+#form--search-icon-div {
+  background-color: #C8D3D9;
+  border-radius: 2px 0px 0px 2px;
+  width: 40px;
+}
+
+#div--search-icon {
+  height: 30px;
+  margin: 5px 0px 0px 5px;
+}
+
+#form--search-input {
+  border: solid #fff 0px;
+  border-radius: 0px 2px 2px 0px;
+  font-size: 1em;
+  padding-left: 10px;
+  width: 300px;
+}
+/*Aside Styles*/
 #aside {
+  align-items: center;
+  background-color: #587a8a;
+  display: flex;
+  flex-direction: column;
   grid-area: aside;
+  height: 850px;
 }
 
+#aside--task-form,
+#section--filter-by-urgency {
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
+  width: 100%;
+}
+
+#aside--task-form {
+  border-bottom: solid #42697C 2px;
+}
+
+.form--label {
+  color: #C8D3D9;
+}
+
+.form--input {
+  border: solid #1f1f3d 2px;
+  border-radius: 2px;
+  height: 3.5em;
+}
+
+#form--task-input {
+  margin-bottom: 30px;
+}
+
+#form--add-task {
+  display: flex;
+  margin-bottom: 15px;
+}
+
+#section--add-task-input {
+  width: 80%;
+}
+
+#section--add-task-button {
+  text-align: center;
+  align-self: center;
+  width: 20%;
+}
+
+.form--button,
+.section--button {
+  background-color: #1f1f3d;
+  border-radius: 2px;
+  border: none;
+  color: #fff;
+  font-size: 1.2em;
+  font-weight: 700;
+  height: 2.5em;
+  margin: 10px 0px;
+}
+
+
+/*Main Styles*/
 #main {
+  background-color: #f3f6f7;
   grid-area: main;
 }
