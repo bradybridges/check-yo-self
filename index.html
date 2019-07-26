@@ -22,17 +22,17 @@
   <aside id="aside">
     <form id="aside--task-form">
       <label class="form--label"for="task-title">Task Title</label>
-      <input id="form--task-input" class="form--input" type="text" name="task-title">
-
+      <input id="form--task-title-input" class="form--input" type="text" name="task-title">
+      <ul id="form--appended-tasks"></ul>
       <label class="form--label" for="task-item">Task Item</label>
       <section id="form--add-task">
         <input id="section--add-task-input" class="form--input" type="text" name="task-item">
         <div id="section--add-task-button">
-          <span>+</span>
+          +
         </div>
       </section>
 
-      <button class="form--button">Make Task List</button>
+      <button id="make-task-button" class="form--button">Make Task List</button>
       <button class="form--button">Clear All</button>
     </form>
 
