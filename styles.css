@@ -9,12 +9,16 @@ body {
   display: grid;
   font-family: 'open sans';
   font-weight: 400;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: .75fr 1fr 1fr;
   grid-template-areas:
   "header header header"
   "aside main main"
   "aside main main";
   margin: 0px;
+}
+
+button:hover {
+  cursor: pointer;
 }
 /*Header Styles*/
 #header {
@@ -49,13 +53,14 @@ body {
 
 #div--search-icon {
   height: 30px;
-  margin: 5px 0px 0px 5px;
+  margin: 8px 0px 0px 5px;
 }
 
 #form--search-input {
   border: solid #fff 0px;
   border-radius: 0px 2px 2px 0px;
   font-size: 1em;
+  height: 45px;
   padding-left: 10px;
   width: 300px;
 }
@@ -88,10 +93,10 @@ body {
 .form--input {
   border: solid #1f1f3d 2px;
   border-radius: 2px;
-  height: 3.5em;
+  height: 50px;
 }
 
-#form--task-input {
+#form--task-title-input {
   margin-bottom: 30px;
 }
 
@@ -102,7 +107,7 @@ body {
 
 #section--add-task-input {
   border-radius: 2px 0px 0px 2px;
-  width: 80%;
+  width: 95%;
 }
 
 #section--add-task-button {
@@ -112,6 +117,14 @@ body {
   font-size: 1.7em;
   text-align: center;
   width: 20%;
+}
+
+#section--add-task-button:hover {
+  cursor: pointer;
+}
+
+#div--add-icon {
+  font-size: 1.2em;
 }
 
 .form--button,
