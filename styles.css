@@ -101,12 +101,16 @@ body {
 }
 
 #section--add-task-input {
+  border-radius: 2px 0px 0px 2px;
   width: 80%;
 }
 
 #section--add-task-button {
+  background-color: #1f1f3d;
+  border-radius: 0px 2px 2px 0px;
+  color: white;
+  font-size: 1.7em;
   text-align: center;
-  align-self: center;
   width: 20%;
 }
 
