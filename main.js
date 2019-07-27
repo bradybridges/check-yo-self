@@ -2,6 +2,7 @@
 var makeTaskButton = document.getElementById('make-task-button');
 var clearButton = document.getElementById('clear-button');
 var aside = document.getElementById('aside');
+var toDoArray = [];
 
 //On Load
 disableButton(makeTaskButton);
@@ -20,6 +21,7 @@ function asideHandler(event) {
   makeTaskListEventHandler(event);
   deleteTaskHandler(event);
   clearButtonHandler(event);
+  addTaskListHandler(event);
 }
 
 function asideKeyupHandler(event) {
@@ -94,7 +96,7 @@ function addTask(event) {
 function insertTask(task){
   var taskUl = document.getElementById('form--appended-tasks');
   taskUl.insertAdjacentHTML('beforeend', `
-    <li class="task"><div class="delete-task">x</div>${task}
+    <li class="task"><div class="delete-task">x</div><span class="task-content">${task}</span></li>
     `);
 }
 
@@ -154,6 +156,42 @@ function clearDisabledHandler(){
     enableButton(clearButton);
     enabledButton(clearButton);
   }
+}
+
+function addTaskListHandler(event) {
+  if(event.target.id === 'make-task-button') {
+    console.log('fired');
+    toDoCreationHandler();
+  }
+}
+
+function toDoCreationHandler() {
+  var title = document.getElementById('form--task-title-input').value;
+  var tasksStrings = grabTasks();
+  var tasks = [];
+
+  tasksStrings.forEach(taskString => tasks.push(new Task(taskString)));
+
+  toDoObj = {
+    id: Date.now(),
+    title: title,
+    tasks: tasks,
+  }
+
+  createSaveToDo(toDoObj);
+}
+
+function grabTasks() {
+  var tasksArray = [];
+  var tasks = document.querySelectorAll('.task-content');
+
+  tasks.forEach(task => tasksArray.push(task.innerText));
+  return tasksArray;
+}
+
+function createSaveToDo(toDoObj) {
+  var toDoList = new ToDoList(toDoObj);
+  toDoArray = toDoList.saveToStorage(toDoArray);
 }
 
 function clearFields(fieldsArray) {
