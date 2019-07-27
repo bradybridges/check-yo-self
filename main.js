@@ -7,6 +7,7 @@ var toDoArray = [];
 
 //On Load
 rebuildFromLocal();
+noToDoHandler();
 disableButton(makeTaskButton);
 disabledButton(makeTaskButton);
 disableButton(clearButton);
@@ -187,6 +188,7 @@ function toDoCreationHandler() {
 
   createSaveToDo(toDoObj);
   appendToDo(toDoObj);
+  noToDoHandler();
 }
 
 function grabTasks() {
@@ -279,4 +281,23 @@ function determineUrgentSrcAndAlt(toDoObj) {
   } else {
     return "src=\"images/urgent-active.svg\" alt=\"urgent icon active\"";
   }
+}
+
+function noToDoHandler() {
+  var noToDoMessage = document.getElementById('main--no-to-do');
+  if(main.childElementCount === 0) {
+    displayNoToDoMessage();
+  } else if(noToDoMessage !== null){
+    removeNoToDoMessage();
+  }
+}
+
+function displayNoToDoMessage() {
+  main.insertAdjacentHTML('afterbegin',`
+    <h2 id="main--no-to-do">No To Do Lists:/</h1>`)
+}
+
+function removeNoToDoMessage() {
+  var noToDoMessage = document.getElementById('main--no-to-do');
+  noToDoMessage.remove();
 }

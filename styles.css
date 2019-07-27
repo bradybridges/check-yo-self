@@ -71,7 +71,7 @@ button:hover {
   display: flex;
   flex-direction: column;
   grid-area: aside;
-  height: 850px;
+  height: 100vh;
 }
 
 #aside--task-form,
@@ -162,6 +162,8 @@ li{
 #main {
   background-color: #f3f6f7;
   grid-area: main;
+  height:100vh;
+  overflow: scroll;
 }
 
 .main--to-do {
@@ -232,4 +234,10 @@ li{
 .div--footer-text {
   color: #3c6577;
   margin: 5px 0px;
+}
+
+#main--no-to-do {
+  text-align: center;
+  margin-top: 200px;
+  font-size: 4em
 }
