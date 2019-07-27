@@ -14,6 +14,7 @@ function asideHandler(event) {
   event.preventDefault();
   addTaskHandler(event);
   makeTaskListEventHandler(event);
+  deleteTaskHandler(event);
   
 }
 
@@ -36,7 +37,7 @@ function makeTaskListButtonHandler(title, tasksUl) {
   }
 
   if(title.value === ''){
-    title.placeholder = 'Add a title and click +';
+    title.placeholder = 'Add a title click +';
   }
 }
 
@@ -85,6 +86,23 @@ function checkTaskItem() {
   } else {
     return false;
   }
+}
+
+function deleteTaskHandler(event) {
+  if(event.target.classList.contains('delete-task')){
+    var liItem = event.target.parentNode;
+    deleteTask(liItem);
+  }
+  var taskUl = document.getElementById('form--appended-tasks');
+
+  if(taskUl.childElementCount === 0){
+    disableButton(makeTaskButton);
+    disabledButton(makeTaskButton);
+  }
+}
+
+function deleteTask(listItem) {
+  listItem.remove();
 }
 
 function clearFields(fieldsArray) {
