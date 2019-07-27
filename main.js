@@ -2,6 +2,7 @@
 var makeTaskButton = document.getElementById('make-task-button');
 var clearButton = document.getElementById('clear-button');
 var aside = document.getElementById('aside');
+var main = document.getElementById('main');
 var toDoArray = [];
 
 //On Load
@@ -181,9 +182,11 @@ function toDoCreationHandler() {
     id: Date.now(),
     title: title,
     tasks: tasks,
+    urgent: false,
   }
 
   createSaveToDo(toDoObj);
+  appendToDo(toDoObj);
 }
 
 function grabTasks() {
@@ -205,20 +208,75 @@ function clearFields(fieldsArray) {
 
 function rebuildFromLocal() {
   rebuildGlobalToDo();
+  rebuildCards(toDoArray);
 }
 
 function rebuildGlobalToDo() {
   var tempToDoArray = JSON.parse(localStorage.getItem('toDoArray'));
 
+  if(tempToDoArray === null) {
+    return;
+  }
+
   for(var i = 0; i < tempToDoArray.length; i++) {
     var tasks = [];
-    tempToDoArray[i].tasks.forEach(task => tasks.push(new Task(task)));
+    tempToDoArray[i].tasks.forEach(task => tasks.push(new Task(task.task)));
     var tempToDoObj = {
       id: tempToDoArray[i].id,
       title: tempToDoArray[i].title,
       tasks: tasks,
-      urgency: tempToDoArray[i].urgency,
+      urgent: tempToDoArray[i].urgent,
     }
     toDoArray.push(new ToDoList(tempToDoObj));
+  }
+}
+
+function rebuildCards(toDoArray) {
+  toDoArray.forEach(toDoObj => appendToDo(toDoObj));
+}
+
+function appendToDo(toDoObj) {
+  var urgentSrc = determineUrgentSrcAndAlt(toDoObj);
+  var tasksLi = createTasksToAppend(toDoObj);
+  main.insertAdjacentHTML('afterbegin',`
+    <section data-id="${toDoObj.id}"class="main--to-do">
+      <article class="section--to-do-header">
+      ${toDoObj.title}
+      </article>
+      <article class="section--to-do-body">
+        <ul class="article--to-do-ul">
+          ${tasksLi}
+        </ul>
+      </article>
+      <article class="section--to-do-footer">
+        <div class="article--footer-button article--urgent-div">
+          <img class="div--footer-img" ${urgentSrc}>
+          <p class="div--footer-text">URGENT</p>
+        </div>
+        <div class="article--footer-button article--delete-div">
+          <img class="div--footer-img" src="images/delete.svg" alt="delete button inactive">
+          <p class="div--footer-text">URGENT</p>
+        </div>
+      </article>
+    </section>`);
+}
+
+function createTasksToAppend(toDoObj) {
+  var tasks = '';
+  var taskIndex = -1;
+
+  for(var i = 0; i < toDoObj.tasks.length; i++) {
+    taskIndex++;
+    tasks += `<li class="ul--task" data-index=${taskIndex}><img class="li--checkbox-img" src="images/checkbox.svg" alt="checkbox inactive">${toDoObj.tasks[i].task}</li>`;
+  }
+
+  return tasks;
+}
+
+function determineUrgentSrcAndAlt(toDoObj) {
+  if(toDoObj.urgent === false) {
+    return "src=\"images/urgent.svg\" alt=\"urgent icon inactive\"";
+  } else {
+    return "src=\"images/urgent-active.svg\" alt=\"urgent icon active\"";
   }
 }
