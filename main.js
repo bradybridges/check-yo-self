@@ -12,13 +12,15 @@ disableButton(makeTaskButton);
 disabledButton(makeTaskButton);
 disableButton(clearButton);
 disabledButton(clearButton);
+onLoadUrgentStyles();
 
 //Event Handlers
-aside.addEventListener('click', asideHandler);
+aside.addEventListener('click', asideClickHandler);
 aside.addEventListener('keyup', asideKeyupHandler);
+main.addEventListener('click', mainClickHandler);
 
 //Functions
-function asideHandler(event) {
+function asideClickHandler(event) {
   event.preventDefault();
   addTaskHandler(event);
   makeTaskListEventHandler(event);
@@ -31,6 +33,11 @@ function asideKeyupHandler(event) {
   event.preventDefault();
   keyupMakeListButtonHandler(event);
   clearDisabledHandler();
+}
+
+function mainClickHandler(event) {
+  event.preventDefault();
+  toggleUrgentHandler(event);
 }
 
 function makeTaskListEventHandler(event) {
@@ -252,7 +259,7 @@ function appendToDo(toDoObj) {
       </article>
       <article class="section--to-do-footer">
         <div class="article--footer-button article--urgent-div">
-          <img class="div--footer-img" ${urgentSrc}>
+          <img class="div--footer-img div--urgent-img" ${urgentSrc}>
           <p class="div--footer-text">URGENT</p>
         </div>
         <div class="article--footer-button article--delete-div">
@@ -300,4 +307,61 @@ function displayNoToDoMessage() {
 function removeNoToDoMessage() {
   var noToDoMessage = document.getElementById('main--no-to-do');
   noToDoMessage.remove();
+}
+
+function toggleUrgentHandler(event) {
+  if(event.target.classList.contains('div--urgent-img')) {
+    toggleUrgent(event);
+  }
+}
+
+function toggleUrgent(event) {
+  var currentId = event.target.parentNode.parentNode.parentNode.dataset.id;
+  currentId = Number(currentId);
+  if(event.target.src.indexOf('urgent.svg') >= 0){
+    event.target.src = 'images/urgent-active.svg';
+    urgentCardStyles(event, true);
+    updateUrgent(currentId, true);
+  } else {
+    event.target.src = 'images/urgent.svg';
+    urgentCardStyles(event, false);
+    updateUrgent(currentId, false);
+  }
+}
+
+function urgentCardStyles(event, isUrgent){
+  var currentCard = event.target.parentNode.parentNode.parentNode;
+  if(isUrgent === true){
+  currentCard.style.backgroundColor = '#ffe89d';
+  } else {
+    currentCard.style.backgroundColor = '#fafdff'
+  }
+}
+
+function updateUrgent(currentId, urgentBoolean) {
+  var index = findToDo(currentId);
+  var tempToDo = toDoArray[index];
+  tempToDo.urgent = urgentBoolean;
+  toDoArray[index].updateToDo(tempToDo);
+  toDoArray[index].saveUpdatedToLocal(toDoArray);
+}
+
+function findToDo(toDoId) {
+  var index = -1;
+  for(var i = 0; i < toDoArray.length; i++) {
+    if(toDoArray[i].id === toDoId) {
+      index = i;
+    }
+  }
+  return index;
+}
+
+function onLoadUrgentStyles() {
+  var domToDos = document.querySelectorAll('.main--to-do');
+
+  for(var i = 0; i < domToDos.length; i++) {
+    if(domToDos[i].children[2].children[0].children[0].src.includes('urgent-active.svg')){
+      domToDos[i].style.backgroundColor = '#ffe89d';
+    }
+  }
 }
