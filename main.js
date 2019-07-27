@@ -5,6 +5,7 @@ var aside = document.getElementById('aside');
 var toDoArray = [];
 
 //On Load
+rebuildFromLocal();
 disableButton(makeTaskButton);
 disabledButton(makeTaskButton);
 disableButton(clearButton);
@@ -128,15 +129,19 @@ function deleteTask(listItem) {
 
 function clearButtonHandler(event) {
   if(event.target.id === 'clear-button') {
-    var titleInput = document.getElementById('form--task-title-input');
-    var taskInput = document.getElementById('section--add-task-input');
-    clearFields([titleInput, taskInput]);
-    removeListItems();
-    disableButton(makeTaskButton);
-    disabledButton(makeTaskButton);
-    disableButton(clearButton);
-    disabledButton(clearButton);
+    clearTaskForm();
   }
+}
+
+function clearTaskForm() {
+  var titleInput = document.getElementById('form--task-title-input');
+  var taskInput = document.getElementById('section--add-task-input');
+  clearFields([titleInput, taskInput]);
+  removeListItems();
+  disableButton(makeTaskButton);
+  disabledButton(makeTaskButton);
+  disableButton(clearButton);
+  disabledButton(clearButton);
 }
 
 function removeListItems() {
@@ -160,8 +165,8 @@ function clearDisabledHandler(){
 
 function addTaskListHandler(event) {
   if(event.target.id === 'make-task-button') {
-    console.log('fired');
     toDoCreationHandler();
+    clearTaskForm();
   }
 }
 
@@ -196,4 +201,24 @@ function createSaveToDo(toDoObj) {
 
 function clearFields(fieldsArray) {
   fieldsArray.forEach(element => element.value = '');
+}
+
+function rebuildFromLocal() {
+  rebuildGlobalToDo();
+}
+
+function rebuildGlobalToDo() {
+  var tempToDoArray = JSON.parse(localStorage.getItem('toDoArray'));
+
+  for(var i = 0; i < tempToDoArray.length; i++) {
+    var tasks = [];
+    tempToDoArray[i].tasks.forEach(task => tasks.push(new Task(task)));
+    var tempToDoObj = {
+      id: tempToDoArray[i].id,
+      title: tempToDoArray[i].title,
+      tasks: tasks,
+      urgency: tempToDoArray[i].urgency,
+    }
+    toDoArray.push(new ToDoList(tempToDoObj));
+  }
 }
