@@ -12,7 +12,7 @@ disableButton(makeTaskButton);
 disabledButton(makeTaskButton);
 disableButton(clearButton);
 disabledButton(clearButton);
-onLoadUrgentStyles();
+onLoadUrgentStylesHandler();
 
 //Event Handlers
 aside.addEventListener('click', asideClickHandler);
@@ -260,11 +260,11 @@ function appendToDo(toDoObj) {
       <article class="section--to-do-footer">
         <div class="article--footer-button article--urgent-div">
           <img class="div--footer-img div--urgent-img" ${urgentSrc}>
-          <p class="div--footer-text">URGENT</p>
+          <p class="div--footer-text" data-urgent="${toDoObj.urgent}">URGENT</p>
         </div>
         <div class="article--footer-button article--delete-div">
           <img class="div--footer-img" src="images/delete.svg" alt="delete button inactive">
-          <p class="div--footer-text">URGENT</p>
+          <p class="div--footer-text">DELETE</p>
         </div>
       </article>
     </section>`);
@@ -316,8 +316,8 @@ function toggleUrgentHandler(event) {
 }
 
 function toggleUrgent(event) {
-  var currentId = event.target.parentNode.parentNode.parentNode.dataset.id;
-  currentId = Number(currentId);
+  var currentId = Number(event.target.parentNode.parentNode.parentNode.dataset.id);
+
   if(event.target.src.indexOf('urgent.svg') >= 0){
     event.target.src = 'images/urgent-active.svg';
     urgentCardStyles(event, true);
@@ -329,12 +329,36 @@ function toggleUrgent(event) {
   }
 }
 
+function toggleUrgentTextDataset(event) {
+  var urgentText = event.target.parentNode.children[1];
+
+  if(urgentText.dataset.urgent === 'true') {
+    urgentText.dataset.urgent = 'false';
+  } else {
+    urgentText.dataset.urgent = 'true';
+  }
+}
+
 function urgentCardStyles(event, isUrgent){
   var currentCard = event.target.parentNode.parentNode.parentNode;
   if(isUrgent === true){
   currentCard.style.backgroundColor = '#ffe89d';
+  toggleUrgentTextDataset(event);
+  toggleUrgentText(event);
   } else {
-    currentCard.style.backgroundColor = '#fafdff'
+    currentCard.style.backgroundColor = '#fafdff';
+    toggleUrgentTextDataset(event);
+    toggleUrgentText(event);
+  }
+}
+
+function toggleUrgentText(event) {
+  urgentText = event.target.parentNode.children[1];
+
+  if(urgentText.dataset.urgent === 'false'){
+    urgentText.style.color = '#1f1f3d';
+  } else {
+    urgentText.style.color = '#b23a25';
   }
 }
 
@@ -356,12 +380,29 @@ function findToDo(toDoId) {
   return index;
 }
 
-function onLoadUrgentStyles() {
+function onLoadUrgentStylesHandler() {
+  onLoadUrgentBackground();
+  onLoadUrgentText();
+}
+
+function onLoadUrgentBackground() {
   var domToDos = document.querySelectorAll('.main--to-do');
 
   for(var i = 0; i < domToDos.length; i++) {
     if(domToDos[i].children[2].children[0].children[0].src.includes('urgent-active.svg')){
       domToDos[i].style.backgroundColor = '#ffe89d';
+    }
+  }
+}
+
+function onLoadUrgentText() {
+  var urgentTexts = document.querySelectorAll('.div--footer-text');
+
+  for(var i = 0; i < urgentTexts.length; i++) {
+    if(urgentTexts[i].dataset.urgent === 'true') {
+      urgentTexts[i].style.color = '#b23a25';
+    } else {
+      urgentTexts[i].style.color = '#1f1f3d';
     }
   }
 }
