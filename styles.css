@@ -163,3 +163,73 @@ li{
   background-color: #f3f6f7;
   grid-area: main;
 }
+
+.main--to-do {
+  background-color: #fafdff;
+  border: solid #c7d3d8 2px;
+  margin: 35px;
+  width: 300px;
+}
+
+.section--to-do-header {
+  border-bottom: solid #c7d3d8 2px;
+  color: #1f1f3d;
+  font-size: 1.3em;
+  font-weight: 700;
+  margin: 10px 2px;
+  padding-left: 15px;
+}
+
+.section--to-do-body {
+  border-bottom: solid #c7d3d8 2px;
+  margin: 20px 2px 10px 2px;
+  padding-left: 15px;
+}
+
+.article--to-do-ul {
+  color: #1f1f3d;
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+}
+
+.ul--task {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.li--checkbox-img {
+  height: 25px;
+  margin-right: 10px;
+}
+
+.section--to-do-footer {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.article--footer-button {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  font-family: 'open sans';
+}
+
+.article--urgent-div {
+  margin-left: 15px;
+}
+
+.article--delete-div {
+  margin-right: 15px;
+}
+
+.div--footer-img {
+  height: 30px;
+  width: 30px;
+}
+
+.div--footer-text {
+  color: #3c6577;
+  margin: 5px 0px;
+}
