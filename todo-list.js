@@ -3,7 +3,7 @@ class ToDoList {
     this.id = toDoObj.id;
     this.title = toDoObj.title;
     this.tasks = toDoObj.tasks;
-    this.urgency = toDoObj.urgency || false;
+    this.urgent = toDoObj.urgent || false;
   }
 
   saveToStorage(array) {
