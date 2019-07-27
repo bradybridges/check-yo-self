@@ -59,12 +59,13 @@ function keyupMakeListButtonHandler(event) {
   }
 }
 
-function disableButton(input) {
-  input.disabled = true;
+function disableButton(button) {
+  button.disabled = true;
 }
 
-function enableButton(input) {
-  input.disabled = false;
+function enableButton(button) {
+  button.disabled = false;
+  button.style.cursor = 'pointer';
 }
 
 function disabledButton(button) {
