@@ -19,8 +19,15 @@ class ToDoList {
     return array;
   }
 
-  updateToDo(obj, toDo) {
+  updateToDo(obj) {
+    this.id = obj.id;
+    this.title = obj.title;
+    this.tasks = obj.tasks;
+    this.urgent = obj.urgent;
+  }
 
+  saveUpdatedToLocal(array) {
+    localStorage.setItem('toDoArray', JSON.stringify(array));
   }
 
   updateTask() {
