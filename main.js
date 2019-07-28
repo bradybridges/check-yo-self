@@ -31,6 +31,7 @@ function asideClickHandler(event) {
   deleteTaskHandler(event);
   clearButtonHandler(event);
   addTaskListHandler(event);
+  filterByUrgentHandler(event);
 }
 
 function asideKeyupHandler(event) {
@@ -252,9 +253,10 @@ function rebuildCards(toDoArray) {
 
 function appendToDo(toDoObj) {
   var urgentSrc = determineUrgentSrcAndAlt(toDoObj);
+  var isUrgent = determineUrgentStatus(toDoObj);
   var tasksLi = createTasksToAppend(toDoObj);
   main.insertAdjacentHTML('afterbegin',`
-    <section data-id="${toDoObj.id}"class="main--to-do">
+    <section class="main--to-do" data-id="${toDoObj.id}" data-urgent="${isUrgent}">
       <article class="section--to-do-header">
       ${toDoObj.title}
       </article>
@@ -298,6 +300,14 @@ function determineUrgentSrcAndAlt(toDoObj) {
   }
 }
 
+function determineUrgentStatus(toDoObj) {
+  if(toDoObj.urgent === false) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
 function determineCheckSrc(completed) {
   if(completed === true) {
     return 'images/checkbox-active.svg';
@@ -338,10 +348,12 @@ function toggleUrgent(event) {
     event.target.src = 'images/urgent-active.svg';
     urgentCardStyles(event, true);
     updateUrgent(currentId, true);
+    event.target.parentNode.parentNode.parentNode.dataset.urgent = 'true';
   } else {
     event.target.src = 'images/urgent.svg';
     urgentCardStyles(event, false);
     updateUrgent(currentId, false);
+    event.target.parentNode.parentNode.parentNode.dataset.urgent = 'false';
   }
 }
 
@@ -580,12 +592,32 @@ function searchDisplayHandler(searchValue) {
   cardsToAdd.forEach(card => card.style.display = 'block');
 }
 
-// function isSearchPresent(card, searchValue) {
-//   cardTitle = card.children[0].innerText.toUpperCase();
+function filterByUrgentHandler(event) {
 
-//   if(cardTitle.includes(searchValue.toUpperCase())) {
-//     console.log(true);
-//   } else {
-//     console.log(false);
-//   }
-// }
+  if(event.target.id === 'filter-by-urgent-button') {
+    toggleFilterButtonActive(event);
+    filterByUrgent(event);
+  }
+}
+
+function toggleFilterButtonActive(event) {
+  if(event.target.dataset.status === 'off') {
+    event.target.dataset.status = 'on';
+    event.target.style.backgroundColor = '#ef4a23';
+  } else {
+    event.target.dataset.status = 'off';
+    event.target.style.backgroundColor = '#1f1f3d';
+  }
+}
+
+function filterByUrgent(event) {
+  var domToDos = document.querySelectorAll('.main--to-do');
+  domToDos = Array.from(domToDos);
+
+  if(event.target.dataset.status === 'on') {
+    var notUrgentToDos = domToDos.filter(card => card.dataset.urgent === 'false');
+    notUrgentToDos.forEach(card => card.style.display = 'none');
+  } else {
+    domToDos.forEach(card => card.style.display = 'block');
+  }
+}
