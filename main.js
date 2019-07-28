@@ -13,6 +13,7 @@ disabledButton(makeTaskButton);
 disableButton(clearButton);
 disabledButton(clearButton);
 onLoadUrgentStylesHandler();
+onLoadCompletedTasks();
 
 //Event Handlers
 aside.addEventListener('click', asideClickHandler);
@@ -277,7 +278,9 @@ function createTasksToAppend(toDoObj) {
 
   for(var i = 0; i < toDoObj.tasks.length; i++) {
     taskIndex++;
-    tasks += `<li class="ul--task" data-index=${taskIndex}><img class="li--checkbox-img" src="images/checkbox.svg" alt="checkbox inactive">${toDoObj.tasks[i].task}</li>`;
+    var complete = toDoObj.tasks[i].complete;
+    var checkmarkSrc = determineCheckSrc(complete);
+    tasks += `<li class="ul--task" data-index=${taskIndex} data-complete="${complete}"><img class="li--checkbox-img" src="${checkmarkSrc}" alt="checkbox inactive">${toDoObj.tasks[i].task}</li>`;
   }
 
   return tasks;
@@ -288,6 +291,14 @@ function determineUrgentSrcAndAlt(toDoObj) {
     return "src=\"images/urgent.svg\" alt=\"urgent icon inactive\"";
   } else {
     return "src=\"images/urgent-active.svg\" alt=\"urgent icon active\"";
+  }
+}
+
+function determineCheckSrc(completed) {
+  if(completed === true) {
+    return 'images/checkbox-active.svg';
+  } else {
+    return 'images/checkbox.svg';
   }
 }
 
@@ -444,4 +455,15 @@ function updateCompleted(event) {
   var cardIndex = findToDo(currentCardId);
   toDoArray[cardIndex].tasks[taskIndex].toggleComplete();
   toDoArray[cardIndex].saveUpdatedToLocal(toDoArray);
+}
+
+function onLoadCompletedTasks() {
+  domToDos = document.querySelectorAll('.ul--task');
+  
+  for(var i = 0; i < domToDos.length; i++) {
+    if(domToDos[i].dataset.complete === 'true') {
+      domToDos[i].style.color = '#3c6577';
+      domToDos[i].style.textDecoration = 'line-through';
+    }
+  }
 }
