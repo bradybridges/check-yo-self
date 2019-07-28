@@ -597,6 +597,7 @@ function filterByUrgentHandler(event) {
   if(event.target.id === 'filter-by-urgent-button') {
     toggleFilterButtonActive(event);
     filterByUrgent(event);
+    toggleNoUrgentMessage();
   }
 }
 
@@ -619,5 +620,38 @@ function filterByUrgent(event) {
     notUrgentToDos.forEach(card => card.style.display = 'none');
   } else {
     domToDos.forEach(card => card.style.display = 'block');
+  }
+}
+
+function toggleNoUrgentMessage() {
+  var urgentCount = 0;
+  var domToDos = document.querySelectorAll('.main--to-do');
+  domToDos = Array.from(domToDos);
+  var urgentButton = document.getElementById('filter-by-urgent-button');
+  
+  for(var i = 0; i < domToDos.length; i++) {
+    if(domToDos[i].dataset.urgent === 'true') {
+      urgentCount++;
+    }
+  }
+  
+  if(urgentCount === 0 && urgentButton.dataset.status === 'on') {
+    turnOnNoUrgentMessage();
+  } else {
+    turnOffNoUrgentMessage();
+  }
+}
+
+function turnOnNoUrgentMessage(){
+  main.insertAdjacentHTML('afterbegin', `
+  <h2 id="main--no-urgent">No Urgent To Do Lists!</h1>
+    `);
+}
+
+function turnOffNoUrgentMessage() {
+  var noUrgentMessage = document.getElementById('main--no-urgent');
+  
+  if(noUrgentMessage !== null){
+  noUrgentMessage.remove();
   }
 }
