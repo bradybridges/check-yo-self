@@ -579,7 +579,15 @@ function headerKeyupHandler(event) {
 
 function searchTitles(event) {
   var searchValue = event.target.value;
+  var filterBy = document.getElementById('select-search-dropdown').value;
+
+  if(filterBy === 'title'){
   searchDisplayHandler(searchValue);
+  }
+
+  if(filterBy === 'task') {
+    taskSearchHandler(searchValue);
+  }
 }
 
 function searchDisplayHandler(searchValue) {
@@ -611,6 +619,38 @@ function urgentSearchHandler(searchValue) {
   cardsToRemove.forEach(card => card.style.display = 'none');
   var cardsToAdd = urgentDomToDos.filter(card => card.children[0].innerText.toUpperCase().includes(searchValue) === true);
   cardsToAdd.forEach(card => card.style.display = 'block');
+}
+
+function taskSearchHandler(searchValue) {
+  var domToDos = document.querySelectorAll('.main--to-do');
+  searchValue = searchValue.toUpperCase();
+  domToDos = Array.from(domToDos);
+
+  for(var i = 0; i < domToDos.length; i++) {
+    var tasks = domToDos[i].children[1].children[0].children;
+    if(containsTask(tasks, searchValue)) {
+      domToDos[i].style.display = 'block';
+    } else {
+      domToDos[i].style.display = 'none';
+    }
+  }
+
+  // var cardsToRemove = domToDos.filter(card => card.children[0].innerText.toUpperCase().includes(searchValue) === false);
+  // cardsToRemove.forEach(card => card.style.display = 'none');
+  // var cardsToAdd = domToDos.filter(card => card.children[0].innerText.toUpperCase().includes(searchValue) === true);
+  // cardsToAdd.forEach(card => card.style.display = 'block');
+}
+
+function containsTask(tasks, searchValue) {
+  var searchSuccess = false;
+  // debugger;
+  for(var i = 0; i < tasks.length; i++) {
+    if(tasks[i].innerText.toUpperCase().includes(searchValue)) {
+      searchSuccess = true;
+    }
+  }
+
+  return searchSuccess;
 }
 
 function filterByUrgentHandler(event) {
