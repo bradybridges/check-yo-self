@@ -237,7 +237,8 @@ li{
   margin: 5px 0px;
 }
 
-#main--no-to-do {
+#main--no-to-do,
+#main--no-urgent {
   text-align: center;
   margin-top: 200px;
   font-size: 4em
