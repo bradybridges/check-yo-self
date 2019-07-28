@@ -40,6 +40,7 @@ function mainClickHandler(event) {
   event.preventDefault();
   toggleUrgentHandler(event);
   checkOffTaskHandler(event);
+  deleteButtonToggle(event);
 }
 //Functions
 function makeTaskListEventHandler(event) {
@@ -424,6 +425,7 @@ function checkOffTaskHandler(event) {
   if(event.target.classList.contains('li--checkbox-img')){
     checkBoxToggle(event);
     updateCompleted(event);
+    toggleCompletedDataset(event);
   }
 }
 
@@ -431,6 +433,7 @@ function checkBoxToggle(event) {
   if(event.target.src.includes('checkbox.svg')) {
     event.target.src = 'images/checkbox-active.svg';
     completedStylesToggle(event, true);
+
   } else {
     event.target.src = 'images/checkbox.svg';
     completedStylesToggle(event, false);
@@ -446,6 +449,16 @@ function completedStylesToggle(event, onOrOffBool) {
   } else {
     checkBoxParentLi.style.textDecoration = 'none';
     checkBoxParentLi.style.color = '#1f1f3d';
+  }
+}
+
+function toggleCompletedDataset(event) {
+  var completeStatus = event.target.parentNode.dataset.complete;
+
+  if(completeStatus === 'true') {
+    event.target.parentNode.dataset.complete = 'false';
+  } else {
+    event.target.parentNode.dataset.complete = 'true';
   }
 }
 
@@ -466,4 +479,43 @@ function onLoadCompletedTasks() {
       domToDos[i].style.textDecoration = 'line-through';
     }
   }
+}
+
+function deleteButtonToggle(event) {
+  if(event.target.classList.contains('li--checkbox-img') && checkCompletion(event)) {
+    enableDelete(event);
+  } else {
+    disableDelete(event);
+  }
+}
+
+function checkCompletion(event) {
+  var incompleteCount = 0;
+  var tasks = event.target.parentNode.parentNode.children;
+  
+  for(var i = 0; i < tasks.length; i++) {
+    if(tasks[i].dataset.complete === 'false') {
+      incompleteCount++;
+    }
+  }
+
+  if(incompleteCount > 0) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
+function enableDelete(event) {
+  var deleteButton = event.target.parentNode.parentNode.parentNode.parentNode.children[2].children[1].children[0];
+  var deleteText = event.target.parentNode.parentNode.parentNode.parentNode.children[2].children[1].children[1];
+  deleteButton.src = 'images/delete-active.svg';
+  deleteText.style.color = '#b23a25';
+}
+
+function disableDelete(event) {
+  var deleteButton = event.target.parentNode.parentNode.parentNode.parentNode.children[2].children[1].children[0];
+  var deleteText = event.target.parentNode.parentNode.parentNode.parentNode.children[2].children[1].children[1];
+  deleteButton.src = 'images/delete.svg';
+  deleteText.style.color = '#1f1f3d';
 }
