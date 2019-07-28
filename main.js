@@ -1,6 +1,7 @@
 //Globals
 var makeTaskButton = document.getElementById('make-task-button');
 var clearButton = document.getElementById('clear-button');
+var main = document.getElementById('header');
 var aside = document.getElementById('aside');
 var main = document.getElementById('main');
 var toDoArray = [];
@@ -16,13 +17,13 @@ onLoadUrgentStylesHandler();
 onLoadCompletedTasks();
 onLoadDeleteStyles();
 
-
 //Event Handlers
+header.addEventListener('keyup', headerKeyupHandler)
 aside.addEventListener('click', asideClickHandler);
 aside.addEventListener('keyup', asideKeyupHandler);
 main.addEventListener('click', mainClickHandler);
 
-//Functions--Primary Handlers
+//Functions
 function asideClickHandler(event) {
   event.preventDefault();
   addTaskHandler(event);
@@ -45,7 +46,7 @@ function mainClickHandler(event) {
   deleteButtonToggle(event);
   deleteToDo(event);
 }
-//Functions
+
 function makeTaskListEventHandler(event) {
   if(event.target.id === 'section--add-task-button') {
     var titleInput = document.getElementById('form--task-title-input');
@@ -556,3 +557,35 @@ function detectDeleteEligibility(toDoCard) {
   }
 
 }
+
+function headerKeyupHandler(event) {
+  event.preventDefault();
+  if(event.target.id === 'form--search-input') {
+    searchTitles(event);
+  }
+}
+
+function searchTitles(event) {
+  var searchValue = event.target.value;
+  searchDisplayHandler(searchValue);
+}
+
+function searchDisplayHandler(searchValue) {
+  var domToDos = document.querySelectorAll('.main--to-do');
+  searchValue = searchValue.toUpperCase();
+  domToDos = Array.from(domToDos);
+  var cardsToRemove = domToDos.filter(card => card.children[0].innerText.toUpperCase().includes(searchValue) === false);
+  cardsToRemove.forEach(card => card.style.display = 'none');
+  var cardsToAdd = domToDos.filter(card => card.children[0].innerText.toUpperCase().includes(searchValue) === true);
+  cardsToAdd.forEach(card => card.style.display = 'block');
+}
+
+// function isSearchPresent(card, searchValue) {
+//   cardTitle = card.children[0].innerText.toUpperCase();
+
+//   if(cardTitle.includes(searchValue.toUpperCase())) {
+//     console.log(true);
+//   } else {
+//     console.log(false);
+//   }
+// }
