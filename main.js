@@ -14,6 +14,8 @@ disableButton(clearButton);
 disabledButton(clearButton);
 onLoadUrgentStylesHandler();
 onLoadCompletedTasks();
+onLoadDeleteStyles();
+
 
 //Event Handlers
 aside.addEventListener('click', asideClickHandler);
@@ -529,4 +531,28 @@ function deleteToDo(event) {
     toDoArray = toDoArray[currentCardIndex].deleteFromStorage(toDoArray);
     currentCard.remove();
   }
+}
+
+function onLoadDeleteStyles() {
+  var domToDos = document.querySelectorAll('.main--to-do');
+  domToDos.forEach(toDoCard => detectDeleteEligibility(toDoCard));
+}
+
+function detectDeleteEligibility(toDoCard) {
+  var tasks = toDoCard.children[1].children[0].children;
+  var deleteImg = toDoCard.children[2].children[1].children[0];
+  var deleteText = toDoCard.children[2].children[1].children[1];
+  var incompleteCount = 0 ;
+
+  for(var i = 0; i < tasks.length; i++) {
+    if(tasks[i].dataset.complete === 'false') {
+      incompleteCount++
+    }
+  }
+
+  if(incompleteCount === 0) {
+    deleteImg.src = 'images/delete-active.svg';
+    deleteText.style.color = '#b23a25';
+  }
+
 }
