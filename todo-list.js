@@ -30,7 +30,7 @@ class ToDoList {
     localStorage.setItem('toDoArray', JSON.stringify(array));
   }
 
-  updateTask() {
-
+  updateTask(tasks) {
+    this.tasks = tasks;
   }
 }

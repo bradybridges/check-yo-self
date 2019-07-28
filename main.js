@@ -19,7 +19,7 @@ aside.addEventListener('click', asideClickHandler);
 aside.addEventListener('keyup', asideKeyupHandler);
 main.addEventListener('click', mainClickHandler);
 
-//Functions
+//Functions--Primary Handlers
 function asideClickHandler(event) {
   event.preventDefault();
   addTaskHandler(event);
@@ -38,8 +38,9 @@ function asideKeyupHandler(event) {
 function mainClickHandler(event) {
   event.preventDefault();
   toggleUrgentHandler(event);
+  checkOffTaskHandler(event);
 }
-
+//Functions
 function makeTaskListEventHandler(event) {
   if(event.target.id === 'section--add-task-button') {
     var titleInput = document.getElementById('form--task-title-input');
@@ -229,7 +230,7 @@ function rebuildGlobalToDo() {
 
   for(var i = 0; i < tempToDoArray.length; i++) {
     var tasks = [];
-    tempToDoArray[i].tasks.forEach(task => tasks.push(new Task(task.task)));
+    tempToDoArray[i].tasks.forEach(task => tasks.push(new Task(task)));
     var tempToDoObj = {
       id: tempToDoArray[i].id,
       title: tempToDoArray[i].title,
@@ -316,7 +317,7 @@ function toggleUrgentHandler(event) {
 }
 
 function toggleUrgent(event) {
-  var currentId = Number(event.target.parentNode.parentNode.parentNode.dataset.id);
+  var currentId = event.target.parentNode.parentNode.parentNode.dataset.id;
 
   if(event.target.src.indexOf('urgent.svg') >= 0){
     event.target.src = 'images/urgent-active.svg';
@@ -372,6 +373,7 @@ function updateUrgent(currentId, urgentBoolean) {
 
 function findToDo(toDoId) {
   var index = -1;
+  toDoId = Number(toDoId);
   for(var i = 0; i < toDoArray.length; i++) {
     if(toDoArray[i].id === toDoId) {
       index = i;
@@ -405,4 +407,41 @@ function onLoadUrgentText() {
       urgentTexts[i].style.color = '#1f1f3d';
     }
   }
+}
+
+function checkOffTaskHandler(event) {
+  if(event.target.classList.contains('li--checkbox-img')){
+    checkBoxToggle(event);
+    updateCompleted(event);
+  }
+}
+
+function checkBoxToggle(event) {
+  if(event.target.src.includes('checkbox.svg')) {
+    event.target.src = 'images/checkbox-active.svg';
+    completedStylesToggle(event, true);
+  } else {
+    event.target.src = 'images/checkbox.svg';
+    completedStylesToggle(event, false);
+  }
+}
+
+function completedStylesToggle(event, onOrOffBool) {
+  var checkBoxParentLi = event.target.parentNode;
+  
+  if(onOrOffBool) {
+    checkBoxParentLi.style.textDecoration = 'line-through';
+    checkBoxParentLi.style.color = '#3c6577';
+  } else {
+    checkBoxParentLi.style.textDecoration = 'none';
+    checkBoxParentLi.style.color = '#1f1f3d';
+  }
+}
+
+function updateCompleted(event) {
+  var currentCardId = event.target.parentNode.parentNode.parentNode.parentNode.dataset.id;
+  var taskIndex = event.target.parentNode.dataset.index;
+  var cardIndex = findToDo(currentCardId);
+  toDoArray[cardIndex].tasks[taskIndex].toggleComplete();
+  toDoArray[cardIndex].saveUpdatedToLocal(toDoArray);
 }
