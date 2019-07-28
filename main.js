@@ -583,6 +583,17 @@ function searchTitles(event) {
 }
 
 function searchDisplayHandler(searchValue) {
+  var filterByUrgentStatus = document.getElementById('filter-by-urgent-button');
+  var filterByUrgentStatus = filterByUrgentStatus.dataset.status;
+  
+  if(filterByUrgentStatus === 'off') {
+    allSearchHandler(searchValue);
+  } else {
+    urgentSearchHandler(searchValue);
+  }
+}
+
+function allSearchHandler(searchValue) {
   var domToDos = document.querySelectorAll('.main--to-do');
   searchValue = searchValue.toUpperCase();
   domToDos = Array.from(domToDos);
@@ -592,8 +603,17 @@ function searchDisplayHandler(searchValue) {
   cardsToAdd.forEach(card => card.style.display = 'block');
 }
 
-function filterByUrgentHandler(event) {
+function urgentSearchHandler(searchValue) {
+  var urgentDomToDos = document.querySelectorAll('.main--to-do');
+  urgentDomToDos = Array.from(urgentDomToDos).filter(card => card.dataset.urgent === 'true');
+  searchValue = searchValue.toUpperCase();
+  var cardsToRemove = urgentDomToDos.filter(card => card.children[0].innerText.toUpperCase().includes(searchValue) === false);
+  cardsToRemove.forEach(card => card.style.display = 'none');
+  var cardsToAdd = urgentDomToDos.filter(card => card.children[0].innerText.toUpperCase().includes(searchValue) === true);
+  cardsToAdd.forEach(card => card.style.display = 'block');
+}
 
+function filterByUrgentHandler(event) {
   if(event.target.id === 'filter-by-urgent-button') {
     toggleFilterButtonActive(event);
     filterByUrgent(event);
