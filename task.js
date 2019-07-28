@@ -1,7 +1,7 @@
 class Task {
-  constructor(task) {
-    this.task = task;
-    this.complete = false;
+  constructor(taskObj) {
+    this.task = taskObj.task;
+    this.complete = taskObj.complete || false;
   }
 
   toggleComplete() {

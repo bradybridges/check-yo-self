@@ -196,6 +196,7 @@ li{
 }
 
 .ul--task {
+  color: #1f1f3d;
   display: flex;
   margin-bottom: 20px;
 }
