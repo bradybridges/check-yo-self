@@ -250,3 +250,31 @@ li{
   margin-top: 200px;
   font-size: 4em
 }
+/*Media Queries*/
+@media only screen and (max-width: 700px) {
+  body {
+    grid-template-areas: 
+    "header header header" 
+    "aside aside aside" 
+    "main main main";
+  }
+
+  #header {
+    flex-direction: column;
+  }
+
+  #header--title {
+    text-align: center;
+    width: 100%;
+  }
+
+  #header--search-form {
+    justify-content: center;
+    margin-bottom: 20px;
+    width: 100%;
+  }
+
+  #aside {
+    height: 55vh;
+  }
+}
