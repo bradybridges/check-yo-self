@@ -41,6 +41,7 @@ function mainClickHandler(event) {
   toggleUrgentHandler(event);
   checkOffTaskHandler(event);
   deleteButtonToggle(event);
+  deleteToDo(event);
 }
 //Functions
 function makeTaskListEventHandler(event) {
@@ -484,14 +485,14 @@ function onLoadCompletedTasks() {
 function deleteButtonToggle(event) {
   if(event.target.classList.contains('li--checkbox-img') && checkCompletion(event)) {
     enableDelete(event);
-  } else {
+  } else if(event.target.classList.contains('li--checkbox-img')) {
     disableDelete(event);
   }
 }
 
 function checkCompletion(event) {
   var incompleteCount = 0;
-  var tasks = event.target.parentNode.parentNode.children;
+  var tasks = event.target.closest('.article--to-do-ul').children;
   
   for(var i = 0; i < tasks.length; i++) {
     if(tasks[i].dataset.complete === 'false') {
@@ -518,4 +519,15 @@ function disableDelete(event) {
   var deleteText = event.target.parentNode.parentNode.parentNode.parentNode.children[2].children[1].children[1];
   deleteButton.src = 'images/delete.svg';
   deleteText.style.color = '#1f1f3d';
+}
+
+function deleteToDo(event) {
+
+  if((event.target.classList.contains('article--delete-div') || event.target.parentNode.classList.contains('article--delete-div'))  ){
+    var currentCard = event.target.closest('.main--to-do');
+    var currentCardIndex = event.target.closest('.main--to-do').dataset.id;
+    currentCardIndex = findToDo(currentCardIndex);
+    toDoArray = toDoArray[currentCardIndex].deleteFromStorage(toDoArray);
+    currentCard.remove();
+  }
 }
