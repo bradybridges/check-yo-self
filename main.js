@@ -187,8 +187,7 @@ function toDoCreationHandler() {
   var title = document.getElementById('form--task-title-input').value;
   var tasksStrings = grabTasks();
   var tasks = [];
-
-  tasksStrings.forEach(taskString => tasks.push(new Task(taskString)));
+  tasksStrings.forEach(taskString => tasks.push(new Task({task: taskString, complete: false,})));
 
   toDoObj = {
     id: Date.now(),
@@ -492,7 +491,7 @@ function deleteButtonToggle(event) {
 
 function checkCompletion(event) {
   var incompleteCount = 0;
-  var tasks = event.target.closest('.article--to-do-ul').children;
+  var tasks = event.target.closest('.main--to-do').children[1].children[0].children;
   
   for(var i = 0; i < tasks.length; i++) {
     if(tasks[i].dataset.complete === 'false') {
@@ -523,7 +522,7 @@ function disableDelete(event) {
 
 function deleteToDo(event) {
 
-  if((event.target.classList.contains('article--delete-div') || event.target.parentNode.classList.contains('article--delete-div'))  ){
+  if((event.target.classList.contains('article--delete-div') || event.target.parentNode.classList.contains('article--delete-div')) && checkCompletion(event)) {
     var currentCard = event.target.closest('.main--to-do');
     var currentCardIndex = event.target.closest('.main--to-do').dataset.id;
     currentCardIndex = findToDo(currentCardIndex);
