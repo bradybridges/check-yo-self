@@ -16,6 +16,7 @@ disabledButton(clearButton);
 onLoadUrgentStylesHandler();
 onLoadCompletedTasks();
 onLoadDeleteStyles();
+onLoadUrgentBorders();
 
 //Event Handlers
 header.addEventListener('keyup', headerKeyupHandler);
@@ -371,13 +372,15 @@ function toggleUrgentTextDataset(event) {
 function urgentCardStyles(event, isUrgent){
   var currentCard = event.target.parentNode.parentNode.parentNode;
   if(isUrgent === true){
-  currentCard.style.backgroundColor = '#ffe89d';
-  toggleUrgentTextDataset(event);
-  toggleUrgentText(event);
+    currentCard.style.backgroundColor = '#ffe89d';
+    toggleUrgentTextDataset(event);
+    toggleUrgentText(event);
+    toggleUrgentBorders(event);
   } else {
     currentCard.style.backgroundColor = '#fafdff';
     toggleUrgentTextDataset(event);
     toggleUrgentText(event);
+    toggleUrgentBorders(event);
   }
 }
 
@@ -389,6 +392,31 @@ function toggleUrgentText(event) {
   } else {
     urgentText.style.color = '#b23a25';
   }
+}
+
+function toggleUrgentBorders(event) {
+  var currentCard = event.target.closest('.main--to-do');
+  var isUrgent = currentCard.dataset.urgent;
+  var cardHeader = currentCard.children[0];
+  var cardBody = currentCard.children[1];
+  
+  if(isUrgent === 'false') {
+    displayUrgentBorders(currentCard, cardHeader, cardBody);
+  } else {
+    undoUrgentBorders(currentCard, cardHeader, cardBody);
+  }
+}
+
+function displayUrgentBorders(currentCard, cardHeader, cardBody) {
+  currentCard.style.border = 'solid #ffc30c 2px';
+  cardHeader.style.borderBottom = 'solid #ffc30c 2px';
+  cardBody.style.borderBottom = 'solid #ffc30c 2px';
+}
+
+function undoUrgentBorders(currentCard, cardHeader, cardBody) {
+  currentCard.style.border = 'solid #c7d3d8 2px';
+  cardHeader.style.borderBottom = 'solid #c7d3d8 2px';
+  cardBody.style.borderBottom = 'solid #c7d3d8 2px';
 }
 
 function updateUrgent(currentId, urgentBoolean) {
@@ -413,6 +441,21 @@ function findToDo(toDoId) {
 function onLoadUrgentStylesHandler() {
   onLoadUrgentBackground();
   onLoadUrgentText();
+}
+
+function onLoadUrgentBorders() {
+  var domToDos = document.querySelectorAll('.main--to-do');
+  domToDos = Array.from(domToDos);
+
+  for(var i = 0; i < domToDos.length; i++){
+    if(domToDos[i].dataset.urgent === 'true') {
+      var cardHeader = domToDos[i].children[0];
+      var cardBody = domToDos[i].children[1];
+      domToDos[i].style.border = 'solid #ffc30c 2px';
+      cardHeader.style.borderBottom = 'solid #ffc30c 2px';
+      cardBody.style.borderBottom = 'solid #ffc30c 2px';
+    }
+  }
 }
 
 function onLoadUrgentBackground() {
