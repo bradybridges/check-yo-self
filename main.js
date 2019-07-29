@@ -10,9 +10,7 @@ var toDoArray = [];
 rebuildFromLocal();
 noToDoHandler();
 disableButton(makeTaskButton);
-disabledButton(makeTaskButton);
 disableButton(clearButton);
-disabledButton(clearButton);
 onLoadUrgentStylesHandler();
 onLoadCompletedTasks();
 onLoadDeleteStyles();
@@ -62,10 +60,8 @@ function makeTaskListButtonHandler(title, tasksUl) {
 
   if((title.value === '') || (tasksUl.childElementCount === 0)) {
     disableButton(makeTaskButton);
-    disabledButton(makeTaskButton);
   } else {
     enableButton(makeTaskButton);
-    enabledButton(makeTaskButton);
   }
 
   if(title.value === ''){
@@ -83,20 +79,24 @@ function keyupMakeListButtonHandler(event) {
 
 function disableButton(button) {
   button.disabled = true;
-}
-
-function enableButton(button) {
-  button.disabled = false;
-  button.style.cursor = 'pointer';
-}
-
-function disabledButton(button) {
   button.style.backgroundColor = "#ccc";
   button.style.cursor = 'default';
 }
 
-function enabledButton(button) {
+// function enableButton(button) {
+//   button.disabled = false;
+//   button.style.cursor = 'pointer';
+// }
+
+// function disabledButton(button) {
+//   button.style.backgroundColor = "#ccc";
+//   button.style.cursor = 'default';
+// }
+
+function enableButton(button) {
+  button.disabled = false;
   button.style.backgroundColor = '#1f1f3d';
+  button.style.cursor = 'pointer';
 }
 
 function addTaskHandler(event) {
@@ -138,7 +138,6 @@ function deleteTaskHandler(event) {
 
   if(taskUl.childElementCount === 0){
     disableButton(makeTaskButton);
-    disabledButton(makeTaskButton);
   }
 }
 
@@ -158,9 +157,7 @@ function clearTaskForm() {
   clearFields([titleInput, taskInput]);
   removeListItems();
   disableButton(makeTaskButton);
-  disabledButton(makeTaskButton);
   disableButton(clearButton);
-  disabledButton(clearButton);
 }
 
 function removeListItems() {
@@ -175,10 +172,8 @@ function clearDisabledHandler(){
 
   if(titleInputValue === '' && taskInputValue === '' && tasksUlChildCount === 0) {
     disableButton(clearButton);
-    disabledButton(clearButton);
   } else {
     enableButton(clearButton);
-    enabledButton(clearButton);
   }
 }
 
