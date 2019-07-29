@@ -582,11 +582,15 @@ function searchTitles(event) {
   var filterBy = document.getElementById('select-search-dropdown').value;
 
   if(filterBy === 'title'){
-  searchDisplayHandler(searchValue);
+    searchDisplayHandler(searchValue);
   }
 
   if(filterBy === 'task') {
     taskSearchHandler(searchValue);
+  }
+
+  if(filterBy === 'all') {
+    allSearchHandler(searchValue);
   }
 }
 
@@ -595,13 +599,13 @@ function searchDisplayHandler(searchValue) {
   var filterByUrgentStatus = filterByUrgentStatus.dataset.status;
   
   if(filterByUrgentStatus === 'off') {
-    allSearchHandler(searchValue);
+    titleSearchHandler(searchValue);
   } else {
-    urgentSearchHandler(searchValue);
+    urgentTitleSearchHandler(searchValue);
   }
 }
 
-function allSearchHandler(searchValue) {
+function titleSearchHandler(searchValue) {
   var domToDos = document.querySelectorAll('.main--to-do');
   searchValue = searchValue.toUpperCase();
   domToDos = Array.from(domToDos);
@@ -611,7 +615,7 @@ function allSearchHandler(searchValue) {
   cardsToAdd.forEach(card => card.style.display = 'block');
 }
 
-function urgentSearchHandler(searchValue) {
+function urgentTitleSearchHandler(searchValue) {
   var urgentDomToDos = document.querySelectorAll('.main--to-do');
   urgentDomToDos = Array.from(urgentDomToDos).filter(card => card.dataset.urgent === 'true');
   searchValue = searchValue.toUpperCase();
@@ -634,11 +638,26 @@ function taskSearchHandler(searchValue) {
       domToDos[i].style.display = 'none';
     }
   }
+}
 
-  // var cardsToRemove = domToDos.filter(card => card.children[0].innerText.toUpperCase().includes(searchValue) === false);
-  // cardsToRemove.forEach(card => card.style.display = 'none');
-  // var cardsToAdd = domToDos.filter(card => card.children[0].innerText.toUpperCase().includes(searchValue) === true);
-  // cardsToAdd.forEach(card => card.style.display = 'block');
+function allSearchHandler(searchValue) {
+  var domToDos = document.querySelectorAll('.main--to-do');
+  searchValue = searchValue.toUpperCase();
+  domToDos = Array.from(domToDos);
+  determineMatchingTitleOrTasks(domToDos, searchValue);
+}
+
+function determineMatchingTitleOrTasks(domToDos, searchValue) {
+  for(var i = 0; i < domToDos.length; i++) {
+    var tasks = domToDos[i].children[1].children[0].children;
+    if(domToDos[i].children[0].innerText.toUpperCase().includes(searchValue)) {
+      domToDos[i].style.display = 'block';
+    } else if(containsTask(tasks, searchValue)){
+      domToDos[i].style.display = 'block';
+    } else {
+      domToDos[i].style.display = 'none';
+    }
+  }
 }
 
 function containsTask(tasks, searchValue) {

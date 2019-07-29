@@ -167,7 +167,11 @@ li{
 
 /*Main Styles*/
 #main {
+  /*Change from flex to masonry l8r*/
+  align-items: center;
   background-color: #f3f6f7;
+  display: flex;
+  flex-direction: column;
   grid-area: main;
   height:100vh;
   overflow: scroll;
