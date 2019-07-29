@@ -114,11 +114,20 @@ button:hover {
 
 .task {
   display: flex;
+  align-items: center;
   width: 100%;
 }
 
 .delete-task {
+  background-color: #fdfaff;
+  border-radius: 50%;
+  border: solid #1f1f3d 1px;
+  display: flex;
+  font-size: 1.2em;
+  height: 30px;
+  justify-content: center;
   margin-right: 20px;
+  width: 30px;
 }
 
 li{
@@ -172,15 +181,18 @@ li{
   background-color: #f3f6f7;
   display: flex;
   flex-direction: column;
+  flex-wrap: wrap;
   grid-area: main;
-  height:100vh;
+  height: 100vh;
+  max-height: 100%;
+  max-width: 100%;
   overflow: scroll;
 }
 
 .main--to-do {
   background-color: #fafdff;
   border: solid #c7d3d8 2px;
-  margin: 35px;
+  margin: 10px 0px 5px 0px;
   width: 300px;
 }
 
