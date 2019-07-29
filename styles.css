@@ -17,6 +17,10 @@ body {
   margin: 0px;
 }
 
+button {
+  font-family: 'open sans';
+}
+
 button:hover {
   cursor: pointer;
 }
@@ -290,5 +294,9 @@ li{
 
   #aside {
     height: 55vh;
+  }
+
+  #main {
+    flex-wrap: unset;
   }
 }
