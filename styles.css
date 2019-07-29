@@ -269,6 +269,12 @@ li{
   font-size: 4em
 }
 /*Media Queries*/
+@media only screen and (max-width: 850px) {
+  #main {
+    flex-wrap: unset;
+  }
+}
+
 @media only screen and (max-width: 700px) {
   body {
     grid-template-areas: 
@@ -294,9 +300,5 @@ li{
 
   #aside {
     height: 55vh;
-  }
-
-  #main {
-    flex-wrap: unset;
   }
 }
