@@ -18,10 +18,11 @@ onLoadCompletedTasks();
 onLoadDeleteStyles();
 
 //Event Handlers
-header.addEventListener('keyup', headerKeyupHandler)
+header.addEventListener('keyup', headerKeyupHandler);
 aside.addEventListener('click', asideClickHandler);
 aside.addEventListener('keyup', asideKeyupHandler);
 main.addEventListener('click', mainClickHandler);
+main.addEventListener('focusout', updateContentHandler);
 
 //Functions
 function asideClickHandler(event) {
@@ -257,7 +258,7 @@ function appendToDo(toDoObj) {
   var tasksLi = createTasksToAppend(toDoObj);
   main.insertAdjacentHTML('afterbegin',`
     <section class="main--to-do" data-id="${toDoObj.id}" data-urgent="${isUrgent}">
-      <article class="section--to-do-header">
+      <article class="section--to-do-header" contenteditable="true">
       ${toDoObj.title}
       </article>
       <article class="section--to-do-body">
@@ -286,7 +287,7 @@ function createTasksToAppend(toDoObj) {
     taskIndex++;
     var complete = toDoObj.tasks[i].complete;
     var checkmarkSrc = determineCheckSrc(complete);
-    tasks += `<li class="ul--task" data-index=${taskIndex} data-complete="${complete}"><img class="li--checkbox-img" src="${checkmarkSrc}" alt="checkbox inactive">${toDoObj.tasks[i].task}</li>`;
+    tasks += `<li class="ul--task" data-index=${taskIndex} data-complete="${complete}"><img class="li--checkbox-img" src="${checkmarkSrc}" alt="checkbox inactive"><span class="li--task-span"contenteditable="true">${toDoObj.tasks[i].task}</span></li>`;
   }
 
   return tasks;
@@ -733,4 +734,36 @@ function turnOffNoUrgentMessage() {
   if(noUrgentMessage !== null){
   noUrgentMessage.remove();
   }
+}
+
+function updateContentHandler(event) {
+  event.preventDefault();
+
+  if(event.target.classList.contains('li--task-span') || event.target.classList.contains('section--to-do-header')) {
+    updateContentInStorage(event);
+  }
+}
+
+function updateContentInStorage(event) {
+  var currentId = event.target.closest('.main--to-do').dataset.id;
+  var currentIndexOfCard = findToDo(currentId);
+  
+  if(event.target.className === 'li--task-span') {
+    updateTaskContent(event, currentIndexOfCard);
+  } else {
+    updateTitleContent(event, currentIndexOfCard);
+  }
+}
+
+function updateTaskContent(event, currentIndexOfCard) {
+  var updatedText = event.target.innerText;
+  var taskIndex = Number(event.target.closest('.ul--task').dataset.index);
+  toDoArray[currentIndexOfCard].tasks[taskIndex].task = updatedText;
+  toDoArray[currentIndexOfCard].saveUpdatedToLocal(toDoArray);
+}
+
+function updateTitleContent(event, currentIndexOfCard) {
+  var updatedTitle = event.target.innerText;
+  toDoArray[currentIndexOfCard].title = updatedTitle;
+  toDoArray[currentIndexOfCard].saveUpdatedToLocal(toDoArray);
 }
