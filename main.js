@@ -116,7 +116,7 @@ function addTask(event) {
 function insertTask(task){
   var taskUl = document.getElementById('form--appended-tasks');
   taskUl.insertAdjacentHTML('beforeend', `
-    <li class="task"><div class="delete-task">x</div><span class="task-content">${task}</span></li>
+    <li class="task"><div class="delete-task">&#10005;</div><span class="task-content">${task}</span></li>
     `);
 }
 
