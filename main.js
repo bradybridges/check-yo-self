@@ -138,6 +138,7 @@ function deleteTaskHandler(event) {
 
   if(taskUl.childElementCount === 0){
     disableButton(makeTaskButton);
+    clearDisabledHandler();
   }
 }
 
@@ -684,9 +685,18 @@ function taskSearchHandler(searchValue) {
 
 function allSearchHandler(searchValue) {
   var domToDos = document.querySelectorAll('.main--to-do');
+  turnOffFilterByUrgent();
   searchValue = searchValue.toUpperCase();
   domToDos = Array.from(domToDos);
   determineMatchingTitleOrTasks(domToDos, searchValue);
+}
+
+function turnOffFilterByUrgent() {
+  var urgentButton = document.getElementById('filter-by-urgent-button');
+  var domToDos = document.querySelectorAll('.main-to-do');
+  urgentButton.dataset.status = 'off';
+  urgentButton.style.backgroundColor = '#1f1f3d';
+  domToDos.forEach(card => card.style.display = 'block');
 }
 
 function determineMatchingTitleOrTasks(domToDos, searchValue) {
