@@ -500,9 +500,11 @@ function completedStylesToggle(event, onOrOffBool) {
   if(onOrOffBool) {
     checkBoxParentLi.style.textDecoration = 'line-through';
     checkBoxParentLi.style.color = '#3c6577';
+    checkBoxParentLi.style.fontStyle = 'italic';
   } else {
     checkBoxParentLi.style.textDecoration = 'none';
     checkBoxParentLi.style.color = '#1f1f3d';
+    checkBoxParentLi.style.fontStyle = 'normal';
   }
 }
 
@@ -531,6 +533,7 @@ function onLoadCompletedTasks() {
     if(domToDos[i].dataset.complete === 'true') {
       domToDos[i].style.color = '#3c6577';
       domToDos[i].style.textDecoration = 'line-through';
+      domToDos[i].style.fontStyle = 'italic';
     }
   }
 }
