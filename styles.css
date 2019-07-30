@@ -241,7 +241,7 @@ li{
   display: flex;
   justify-content: center;
   margin-bottom: 20px;
-  width: 100%;
+  margin-right: 15px;
 }
 
 .section--add-task-input {
@@ -328,6 +328,8 @@ li{
 
   #header {
     flex-direction: column;
+    height: 17vh;
+    justify-content: space-around;
   }
 
   #header--title {
@@ -338,7 +340,8 @@ li{
   #header--search-form {
     justify-content: center;
     margin-bottom: 20px;
-    width: 100%;
+    margin-left: 15px;
+    width: 95%;
   }
 
   #aside {
