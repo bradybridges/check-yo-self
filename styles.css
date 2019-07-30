@@ -95,7 +95,6 @@ button:hover {
   display: flex;
   flex-direction: column;
   grid-area: aside;
-  height: 92vh;
 }
 
 #aside--task-form,
@@ -192,24 +191,23 @@ li{
 
 /*Main Styles*/
 #main {
-  /*Change from flex to masonry l8r*/
   align-items: center;
   background-color: #f3f6f7;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
+  column-count: 3;
+  column-gap: 50px;
   grid-area: main;
-  height: 100vh;
-  max-height: 92vh;
   max-width: 100%;
+  min-height: 92vh;
   overflow: scroll;
+  padding: 20px;
 }
 
 .main--to-do {
   background-color: #fafdff;
   border: solid #c7d3d8 2px;
+  break-inside: avoid;
   margin-top: 30px;
-  width: 300px;
+  width: 100%;
 }
 
 .section--to-do-header {
@@ -328,6 +326,12 @@ li{
   text-align: center;
 }
 /*Media Queries*/
+@media only screen and (max-width: 1050px) {
+  #main {
+    column-count: 2;
+  }
+}
+
 @media only screen and (max-width: 850px) {
   #header--title {
     font-size: 1.8em;
@@ -335,10 +339,6 @@ li{
 
   .section--button {
     font-size: 1em;
-  }
-
-  #main {
-    flex-wrap: unset;
   }
 }
 
@@ -374,10 +374,16 @@ li{
   }
 
   #main {
+    column-count: 1;
     height: auto;
     max-height: unset;
     min-height: 35vh;
-    padding-bottom: 30px;
+    padding: 0px;
+  }
+
+  .main--to-do {
+    margin: 30px auto;
+    width: 80%;
   }
 
   #main--no-to-do,
