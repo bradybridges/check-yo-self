@@ -46,6 +46,7 @@ function mainClickHandler(event) {
   checkOffTaskHandler(event);
   deleteButtonToggle(event);
   deleteToDo(event);
+  addTaskInCardHandler(event);
 }
 
 function makeTaskListEventHandler(event) {
@@ -252,6 +253,12 @@ function appendToDo(toDoObj) {
         <ul class="article--to-do-ul">
           ${tasksLi}
         </ul>
+        <section class="article--new-task-container">
+          <input class="section--add-task-input" class="form--input" type="text" name="task-item">
+          <div class="section--add-task-button">
+           +
+          </div>
+        </section>
       </article>
       <article class="section--to-do-footer">
         <div class="article--footer-button article--urgent-div">
@@ -838,3 +845,27 @@ function updateTitleContent(event, currentIndexOfCard) {
   toDoArray[currentIndexOfCard].title = updatedTitle;
   toDoArray[currentIndexOfCard].saveUpdatedToLocal(toDoArray);
 }
+
+function addTaskInCardHandler(event) {
+  if(event.target.classList.contains('section--add-task-button') && event.target.parentNode.children[0].value !== ''){
+    var newTask = event.target.parentNode.children[0].value;
+    var tasksUl = event.target.closest('.main--to-do').children[1].children[0];
+    var taskIndex = tasksUl.children.length - 1;
+    tasksUl.insertAdjacentHTML('beforeend',`
+    <li class="ul--task" data-index=${taskIndex} data-complete="false"><img class="li--checkbox-img" src="images/checkbox.svg" alt="checkbox inactive"><span class="li--task-span"contenteditable="true">${newTask}</span></li>
+    `);
+    clearFields([event.target.parentNode.children[0]]);
+    saveTask(event, newTask);
+  }
+}
+
+function saveTask(event, newTask) {
+  var newTask = new Task({task: newTask});
+  var currentCardId = event.target.closest('.main--to-do').dataset.id;
+  var cardIndex = findToDo(currentCardId);
+  toDoArray[cardIndex].tasks.push(newTask);
+  toDoArray[cardIndex].saveUpdatedToLocal(toDoArray);
+
+}
+
+
