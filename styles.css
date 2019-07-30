@@ -283,6 +283,10 @@ li{
   font-family: 'open sans';
 }
 
+.article--footer-button:hover {
+  cursor: pointer;
+}
+
 .article--urgent-div {
   margin-left: 15px;
 }
