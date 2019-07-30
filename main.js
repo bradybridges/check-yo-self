@@ -639,7 +639,7 @@ function searchTitles(event) {
 
 function searchDisplayHandler(searchValue) {
   var filterByUrgentStatus = document.getElementById('filter-by-urgent-button');
-  var filterByUrgentStatus = filterByUrgentStatus.dataset.status;
+   filterByUrgentStatus = filterByUrgentStatus.dataset.status;
   
   if(filterByUrgentStatus === 'off') {
     titleSearchHandler(searchValue);
@@ -669,6 +669,29 @@ function urgentTitleSearchHandler(searchValue) {
 }
 
 function taskSearchHandler(searchValue) {
+  var filterByUrgentStatus = document.getElementById('filter-by-urgent-button');
+   filterByUrgentStatus = filterByUrgentStatus.dataset.status;
+
+   if(filterByUrgentStatus === 'off') {
+    allTaskSearch(searchValue);
+   } else {
+    urgentTaskSearch(searchValue);
+   }
+  // var domToDos = document.querySelectorAll('.main--to-do');
+  // searchValue = searchValue.toUpperCase();
+  // domToDos = Array.from(domToDos);
+
+  // for(var i = 0; i < domToDos.length; i++) {
+  //   var tasks = domToDos[i].children[1].children[0].children;
+  //   if(containsTask(tasks, searchValue)) {
+  //     domToDos[i].style.display = 'block';
+  //   } else {
+  //     domToDos[i].style.display = 'none';
+  //   }
+  // }
+}
+
+function allTaskSearch(searchValue) {
   var domToDos = document.querySelectorAll('.main--to-do');
   searchValue = searchValue.toUpperCase();
   domToDos = Array.from(domToDos);
@@ -679,6 +702,22 @@ function taskSearchHandler(searchValue) {
       domToDos[i].style.display = 'block';
     } else {
       domToDos[i].style.display = 'none';
+    }
+  }
+}
+
+function urgentTaskSearch(searchValue) {
+  var domToDos = document.querySelectorAll('.main--to-do');
+  searchValue = searchValue.toUpperCase();
+  domToDos = Array.from(domToDos);
+  urgentDomToDos = domToDos.filter(card => card.dataset.urgent === 'true');
+
+  for(var i = 0; i < urgentDomToDos.length; i++) {
+    var tasks = urgentDomToDos[i].children[1].children[0].children;
+    if(containsTask(tasks, searchValue)) {
+      urgentDomToDos[i].style.display = 'block';
+    } else {
+      urgentDomToDos[i].style.display = 'none';
     }
   }
 }
