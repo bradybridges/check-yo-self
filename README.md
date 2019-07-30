@@ -26,7 +26,7 @@ CheckYo'Self is a project to test you abilities in HTML, CSS, and Javascript. In
   <img src="https://github.com/bradybridges/check-yo-self/blob/master/images/mobile-actual.png" alt="Mobile Img Of Project">
 ​
 ## Features
-  - [x] See list of all existing to-dos, lists of checked off tasks, and state of urgency
+- [x] See list of all existing to-dos, lists of checked off tasks, and state of urgency
   - [x] To dos appear in descending order, if no to-dos a message is displayed
   - [x] Two inputs for entering the title and adding a new task to list and clear all button to clear fields
   - [x] Filter by urgency button
