@@ -765,7 +765,9 @@ function containsTask(tasks, searchValue) {
 }
 
 function filterByUrgentHandler(event) {
-  if(event.target.id === 'filter-by-urgent-button') {
+  var noToDoMessage = document.getElementById('main--no-to-do');
+  
+  if(event.target.id === 'filter-by-urgent-button' && noToDoMessage === null) {
     toggleFilterButtonActive(event);
     filterByUrgent(event);
     toggleNoUrgentMessage();
