@@ -586,6 +586,7 @@ function deleteToDo(event) {
     currentCardIndex = findToDo(currentCardIndex);
     toDoArray = toDoArray[currentCardIndex].deleteFromStorage(toDoArray);
     currentCard.remove();
+    noToDoHandler();
   }
 }
 
