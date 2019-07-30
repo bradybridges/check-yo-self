@@ -329,6 +329,10 @@ li{
 }
 /*Media Queries*/
 @media only screen and (max-width: 850px) {
+  #header--title {
+    font-size: 1.8em;
+  }
+
   #main {
     flex-wrap: unset;
   }
@@ -349,6 +353,7 @@ li{
   }
 
   #header--title {
+    font-size: 2.2em;
     text-align: center;
     width: 100%;
   }
