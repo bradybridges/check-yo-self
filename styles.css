@@ -361,6 +361,18 @@ li{
   }
 
   #aside {
-    height: 55vh;
+    height: auto;
+  }
+
+  #main {
+    height: auto;
+    max-height: unset;
+    min-height: 35vh;
+  }
+
+  #main--no-to-do,
+  #main--no-urgent {
+    font-size: 2.5em;
+    margin-top: 100px;
   }
 }
