@@ -10,9 +10,7 @@ var toDoArray = [];
 rebuildFromLocal();
 noToDoHandler();
 disableButton(makeTaskButton);
-disabledButton(makeTaskButton);
 disableButton(clearButton);
-disabledButton(clearButton);
 onLoadUrgentStylesHandler();
 onLoadCompletedTasks();
 onLoadDeleteStyles();
@@ -62,10 +60,8 @@ function makeTaskListButtonHandler(title, tasksUl) {
 
   if((title.value === '') || (tasksUl.childElementCount === 0)) {
     disableButton(makeTaskButton);
-    disabledButton(makeTaskButton);
   } else {
     enableButton(makeTaskButton);
-    enabledButton(makeTaskButton);
   }
 
   if(title.value === ''){
@@ -83,20 +79,24 @@ function keyupMakeListButtonHandler(event) {
 
 function disableButton(button) {
   button.disabled = true;
-}
-
-function enableButton(button) {
-  button.disabled = false;
-  button.style.cursor = 'pointer';
-}
-
-function disabledButton(button) {
   button.style.backgroundColor = "#ccc";
   button.style.cursor = 'default';
 }
 
-function enabledButton(button) {
+// function enableButton(button) {
+//   button.disabled = false;
+//   button.style.cursor = 'pointer';
+// }
+
+// function disabledButton(button) {
+//   button.style.backgroundColor = "#ccc";
+//   button.style.cursor = 'default';
+// }
+
+function enableButton(button) {
+  button.disabled = false;
   button.style.backgroundColor = '#1f1f3d';
+  button.style.cursor = 'pointer';
 }
 
 function addTaskHandler(event) {
@@ -138,7 +138,7 @@ function deleteTaskHandler(event) {
 
   if(taskUl.childElementCount === 0){
     disableButton(makeTaskButton);
-    disabledButton(makeTaskButton);
+    clearDisabledHandler();
   }
 }
 
@@ -158,9 +158,7 @@ function clearTaskForm() {
   clearFields([titleInput, taskInput]);
   removeListItems();
   disableButton(makeTaskButton);
-  disabledButton(makeTaskButton);
   disableButton(clearButton);
-  disabledButton(clearButton);
 }
 
 function removeListItems() {
@@ -175,10 +173,8 @@ function clearDisabledHandler(){
 
   if(titleInputValue === '' && taskInputValue === '' && tasksUlChildCount === 0) {
     disableButton(clearButton);
-    disabledButton(clearButton);
   } else {
     enableButton(clearButton);
-    enabledButton(clearButton);
   }
 }
 
@@ -505,9 +501,11 @@ function completedStylesToggle(event, onOrOffBool) {
   if(onOrOffBool) {
     checkBoxParentLi.style.textDecoration = 'line-through';
     checkBoxParentLi.style.color = '#3c6577';
+    checkBoxParentLi.style.fontStyle = 'italic';
   } else {
     checkBoxParentLi.style.textDecoration = 'none';
     checkBoxParentLi.style.color = '#1f1f3d';
+    checkBoxParentLi.style.fontStyle = 'normal';
   }
 }
 
@@ -536,6 +534,7 @@ function onLoadCompletedTasks() {
     if(domToDos[i].dataset.complete === 'true') {
       domToDos[i].style.color = '#3c6577';
       domToDos[i].style.textDecoration = 'line-through';
+      domToDos[i].style.fontStyle = 'italic';
     }
   }
 }
@@ -686,9 +685,18 @@ function taskSearchHandler(searchValue) {
 
 function allSearchHandler(searchValue) {
   var domToDos = document.querySelectorAll('.main--to-do');
+  turnOffFilterByUrgent();
   searchValue = searchValue.toUpperCase();
   domToDos = Array.from(domToDos);
   determineMatchingTitleOrTasks(domToDos, searchValue);
+}
+
+function turnOffFilterByUrgent() {
+  var urgentButton = document.getElementById('filter-by-urgent-button');
+  var domToDos = document.querySelectorAll('.main-to-do');
+  urgentButton.dataset.status = 'off';
+  urgentButton.style.backgroundColor = '#1f1f3d';
+  domToDos.forEach(card => card.style.display = 'block');
 }
 
 function determineMatchingTitleOrTasks(domToDos, searchValue) {
