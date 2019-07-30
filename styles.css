@@ -368,6 +368,7 @@ li{
     height: auto;
     max-height: unset;
     min-height: 35vh;
+    padding-bottom: 30px;
   }
 
   #main--no-to-do,
