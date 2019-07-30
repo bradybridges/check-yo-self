@@ -83,16 +83,6 @@ function disableButton(button) {
   button.style.cursor = 'default';
 }
 
-// function enableButton(button) {
-//   button.disabled = false;
-//   button.style.cursor = 'pointer';
-// }
-
-// function disabledButton(button) {
-//   button.style.backgroundColor = "#ccc";
-//   button.style.cursor = 'default';
-// }
-
 function enableButton(button) {
   button.disabled = false;
   button.style.backgroundColor = '#1f1f3d';
@@ -340,18 +330,18 @@ function toggleUrgentHandler(event) {
 }
 
 function toggleUrgent(event) {
-  var currentId = event.target.parentNode.parentNode.parentNode.dataset.id;
+  var currentId = event.target.closest('.main--to-do').dataset.id;
 
   if(event.target.src.indexOf('urgent.svg') >= 0){
     event.target.src = 'images/urgent-active.svg';
     urgentCardStyles(event, true);
     updateUrgent(currentId, true);
-    event.target.parentNode.parentNode.parentNode.dataset.urgent = 'true';
+    event.target.closest('.main--to-do').dataset.urgent = 'true';
   } else {
     event.target.src = 'images/urgent.svg';
     urgentCardStyles(event, false);
     updateUrgent(currentId, false);
-    event.target.parentNode.parentNode.parentNode.dataset.urgent = 'false';
+    event.target.closest('.main--to-do').dataset.urgent = 'false';
   }
 }
 
@@ -366,7 +356,7 @@ function toggleUrgentTextDataset(event) {
 }
 
 function urgentCardStyles(event, isUrgent){
-  var currentCard = event.target.parentNode.parentNode.parentNode;
+  var currentCard = event.target.closest('.main--to-do');
   if(isUrgent === true){
     currentCard.style.backgroundColor = '#ffe89d';
     toggleUrgentTextDataset(event);
@@ -520,7 +510,7 @@ function toggleCompletedDataset(event) {
 }
 
 function updateCompleted(event) {
-  var currentCardId = event.target.parentNode.parentNode.parentNode.parentNode.dataset.id;
+  var currentCardId = event.target.closest('.main--to-do').dataset.id;
   var taskIndex = event.target.parentNode.dataset.index;
   var cardIndex = findToDo(currentCardId);
   toDoArray[cardIndex].tasks[taskIndex].toggleComplete();
@@ -565,15 +555,15 @@ function checkCompletion(event) {
 }
 
 function enableDelete(event) {
-  var deleteButton = event.target.parentNode.parentNode.parentNode.parentNode.children[2].children[1].children[0];
-  var deleteText = event.target.parentNode.parentNode.parentNode.parentNode.children[2].children[1].children[1];
+  var deleteButton = event.target.closest('.main--to-do').children[2].children[1].children[0];
+  var deleteText = event.target.closest('.main--to-do').children[2].children[1].children[1];
   deleteButton.src = 'images/delete-active.svg';
   deleteText.style.color = '#b23a25';
 }
 
 function disableDelete(event) {
-  var deleteButton = event.target.parentNode.parentNode.parentNode.parentNode.children[2].children[1].children[0];
-  var deleteText = event.target.parentNode.parentNode.parentNode.parentNode.children[2].children[1].children[1];
+  var deleteButton = event.target.closest('.main--to-do').children[2].children[1].children[0];
+  var deleteText = event.target.closest('.main--to-do').children[2].children[1].children[1];
   deleteButton.src = 'images/delete.svg';
   deleteText.style.color = '#1f1f3d';
 }
@@ -678,18 +668,6 @@ function taskSearchHandler(searchValue) {
    } else {
     urgentTaskSearch(searchValue);
    }
-  // var domToDos = document.querySelectorAll('.main--to-do');
-  // searchValue = searchValue.toUpperCase();
-  // domToDos = Array.from(domToDos);
-
-  // for(var i = 0; i < domToDos.length; i++) {
-  //   var tasks = domToDos[i].children[1].children[0].children;
-  //   if(containsTask(tasks, searchValue)) {
-  //     domToDos[i].style.display = 'block';
-  //   } else {
-  //     domToDos[i].style.display = 'none';
-  //   }
-  // }
 }
 
 function allTaskSearch(searchValue) {
