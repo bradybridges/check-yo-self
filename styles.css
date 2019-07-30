@@ -41,6 +41,10 @@ button:hover {
   margin: 12px 12px;
 }
 
+#header--title:hover{
+  cursor: default;
+}
+
 #h1--yo-span{
   color: #ffc30c;
 }
@@ -60,6 +64,10 @@ button:hover {
   margin: 10px 0px 0px 10px;
 }
 
+#div--search-icon:hover {
+  cursor: default;
+}
+
 #form--search-input {
   border: solid #fff 0px;
   border-radius: 0px 2px 2px 0px;
@@ -75,6 +83,10 @@ button:hover {
   height: 45px;
   margin: 0px 10px;
   width: 100px;
+}
+
+#select-search-dropdown:hover {
+  cursor: pointer;
 }
 /*Aside Styles*/
 #aside {
