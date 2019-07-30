@@ -23,7 +23,7 @@ CheckYo'Self is a project to test you abilities in HTML, CSS, and Javascript. In
 ​
 ## Screenshots
   <img src="https://github.com/bradybridges/check-yo-self/blob/master/images/desktop-actual.png" alt="Desktop Img Of Project">
-  <img src="https://github.com/bradybridges/check-yo-self/blob/master/images/mobile-actual.png" alt="Mobile Img Of Project" style="margin: 0 auto;">
+  <img src="https://github.com/bradybridges/check-yo-self/blob/master/images/mobile-actual.png" alt="Mobile Img Of Project" style="display: block; margin: 0 auto;">
 ​
 ## Features
 
