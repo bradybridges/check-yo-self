@@ -267,9 +267,13 @@ li{
 
 #main--no-to-do,
 #main--no-urgent {
-  text-align: center;
+  background-color: #1f1f3d;
+  border-radius: 10px;
+  color: #ffc303;
+  font-size: 4em;
   margin-top: 200px;
-  font-size: 4em
+  padding: 15px;
+  text-align: center;
 }
 /*Media Queries*/
 @media only screen and (max-width: 850px) {
