@@ -339,6 +339,11 @@ li{
     font-size: 1.8em;
   }
 
+  #main--no-to-do,
+  #main--no-urgent {
+    margin-left: 30%;
+  }
+
   .section--button {
     font-size: 1em;
   }
@@ -391,6 +396,7 @@ li{
   #main--no-to-do,
   #main--no-urgent {
     font-size: 2.5em;
+    margin-left:25%;
     margin-top: 100px;
   }
 }
