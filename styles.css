@@ -133,6 +133,10 @@ button:hover {
   width: 100%;
 }
 
+.task-content {
+  color: #fff;
+}
+
 .delete-task {
   background-color: #fdfaff;
   border-radius: 50%;
